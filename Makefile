@@ -6,7 +6,7 @@
 #    By: nmartins <nmartins@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/04/18 20:11:18 by nmartins       #+#    #+#                 #
-#    Updated: 2019/06/30 21:46:29 by nmartins      ########   odam.nl          #
+#    Updated: 2019/07/01 00:08:35 by nmartins      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,16 @@ PUSH_SWAP=		push_swap
 
 
 OBJECT_NAMES=	\
+				instruction \
+				instruction_push \
+				instruction_rotate \
+				instruction_swap \
+				stack \
+				stack_parser \
+				stack_reverse \
+				stack_sorter \
+				machine \
+				error \
 				
 
 
@@ -36,7 +46,7 @@ SRC=./src
 OBJ=./.obj
 EXTRA=
 CFLAGS=-Werror -Wall -Wextra $(EXTRA)
-LFLAGS=-L$(LIBFT) -lft
+LFLAGS=-L$(LIBFT) -lft $(INCLUDES)
 OBJECTS=$(patsubst %, $(OBJ)/%.o, $(MAIN) $(OBJECT_NAMES))
 SOURCES=$(patsubst %, $(SRC)/%.c, $(MAIN) $(OBJECT_NAMES))
 
@@ -63,11 +73,11 @@ libft_clean:
 libft_fclean:
 	@$(MAKE) -C $(LIBFT) fclean
 
-$(PUSH_SWAP): $(LIBFT)/libft.a $(OBJECTS)
+$(PUSH_SWAP): $(LIBFT)/libft.a $(OBJECTS) $(SRC)/$(PUSH_SWAP).c
 	@printf " λ Linking $(UNDERLINE)$(BLUE)$@$(RESET)\n"
 	@$(CC) -o $@ $(SRC)/$(PUSH_SWAP).c $(OBJECTS) $(LFLAGS)
 
-$(CHECKER): $(LIBFT)/libft.a $(OBJECTS)
+$(CHECKER): $(LIBFT)/libft.a $(OBJECTS) $(SRC)/$(CHECKER).c
 	@printf " λ Linking $(UNDERLINE)$(BLUE)$@$(RESET)\n"
 	@$(CC) -o $@ $(SRC)/$(CHECKER).c $(OBJECTS) $(LFLAGS)
 

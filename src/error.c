@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   machine.h                                          :+:    :+:            */
+/*   error.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/30 21:47:12 by nmartins       #+#    #+#                */
-/*   Updated: 2019/06/30 23:40:17 by nmartins      ########   odam.nl         */
+/*   Created: 2019/06/30 22:25:46 by nmartins       #+#    #+#                */
+/*   Updated: 2019/06/30 22:31:38 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACHINE_H
-# define MACHINE_H
+#include <libft.h>
+#include <stdlib.h>
 
-# include "stack.h"
+#include "error.h"
 
-typedef struct	s_machine
+/*
+** Error with an exit number and a string
+*/
+
+void	error_out(int exit_no, const char *error_string)
 {
-	t_stack	**a;
-	t_stack	**b;
-}       		t_machine;
-
-int	machine_is_finished(t_machine *machine);
-
-#endif
+	ft_putstr_fd(error_string, 2);
+	exit(exit_no);
+}

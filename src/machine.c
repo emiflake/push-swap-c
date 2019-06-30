@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   machine.h                                          :+:    :+:            */
+/*   machine.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/30 21:47:12 by nmartins       #+#    #+#                */
-/*   Updated: 2019/06/30 23:40:17 by nmartins      ########   odam.nl         */
+/*   Created: 2019/06/30 23:36:13 by nmartins       #+#    #+#                */
+/*   Updated: 2019/06/30 23:41:45 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACHINE_H
-# define MACHINE_H
+#include "machine.h"
+#include "stack.h"
 
-# include "stack.h"
-
-typedef struct	s_machine
+int	machine_is_finished(t_machine *machine)
 {
-	t_stack	**a;
-	t_stack	**b;
-}       		t_machine;
-
-int	machine_is_finished(t_machine *machine);
-
-#endif
+	if (!stack_is_sorted(machine->a))
+		return (0);
+	if (!stack_is_empty(machine->b))
+		return (0);
+	return (1);
+}
