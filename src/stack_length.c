@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   history.h                                          :+:    :+:            */
+/*   stack_length.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/30 22:00:06 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 21:28:54 by nmartins      ########   odam.nl         */
+/*   Created: 2019/07/01 21:42:34 by nmartins       #+#    #+#                */
+/*   Updated: 2019/07/01 21:43:44 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HISTORY_H
-# define HISTORY_H
+#include <stddef.h>
+#include "stack.h"
 
-# include <stddef.h>
-
-# include "instruction.h"
-
-typedef struct	s_history
+size_t	stack_length(t_stack **stack)
 {
-	t_instruction		inst;
-	struct s_history	*next;
-}				t_history;
-    
-void			history_save(t_history **history, t_instruction instruction);
+	t_stack	*walker;
+	size_t	counter;
 
-void			history_reverse(t_history **history);
-void			history_print(t_history **history);
-size_t			history_length(t_history **history);
-
-#endif
+	counter = 0;
+	walker = *stack;
+	while (walker)
+	{
+		walker = walker->tail;
+		counter++;
+	}
+	return (counter);
+}

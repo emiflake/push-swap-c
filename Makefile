@@ -6,7 +6,7 @@
 #    By: nmartins <nmartins@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/04/18 20:11:18 by nmartins       #+#    #+#                 #
-#    Updated: 2019/07/01 18:35:10 by nmartins      ########   odam.nl          #
+#    Updated: 2019/07/01 21:59:16 by nmartins      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,12 @@ OBJECT_NAMES=	\
 				stack_parser \
 				stack_reverse \
 				stack_sorter \
+				stack_length \
+				history \
+				algo \
+				algo_helper_rotation \
+				insertion_sort \
+				dsl \
 				machine \
 				error \
 				

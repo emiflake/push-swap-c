@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 21:43:59 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 18:49:39 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/01 22:36:45 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,28 @@
 
 void	checker_perform_instructions(t_machine *machine)
 {
+	size_t			count;
 	char			*line;
 	t_instruction	inst;
 
+	count = 0;
 	line = NULL;
 	while (ft_get_next_line(0, &line))
 	{
 		inst = parse_instruction(line);
 		if (inst == INVALID_INSTRUCTION)
 			error_out(2, "Error: Invalid instruction\n");
-		ft_printf("Performed instruction %5s => ", stringify_instruction(inst));
+		// ft_printf("Performed instruction %5s => ", stringify_instruction(inst));
 		perform_instruction(machine, inst);
-		stack_print(machine->a);
-		stack_print(machine->b);
-		ft_putstr("\n");
+		// stack_print(machine->a);
+		// stack_print(machine->b);
+		// ft_putstr("\n");
+		count++;
 	}
+	ft_printf("[%lu Instructions Ran]\n", count);
+	stack_print(machine->a);
+	stack_print(machine->b);
+	ft_printf("\n");
 }
 
 void	checker_check(t_machine *machine)
@@ -68,10 +75,7 @@ void	checker(char *stack_str)
 int		main(int argc, char **argv)
 {
 	if (argc != 2)
-	{
 		error_out(2, "Error\n");
-		return (1);
-	}
 	checker(argv[1]);
 	return (0);
 }

@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   history.h                                          :+:    :+:            */
+/*   dsl.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/30 22:00:06 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 21:28:54 by nmartins      ########   odam.nl         */
+/*   Created: 2019/07/01 20:54:21 by nmartins       #+#    #+#                */
+/*   Updated: 2019/07/01 21:09:41 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HISTORY_H
-# define HISTORY_H
+#include "dsl.h"
+#include "machine.h"
+#include "instruction.h"
 
-# include <stddef.h>
-
-# include "instruction.h"
-
-typedef struct	s_history
+void	do_inst(t_machine *machine, t_history **history, t_instruction instruction)
 {
-	t_instruction		inst;
-	struct s_history	*next;
-}				t_history;
-    
-void			history_save(t_history **history, t_instruction instruction);
-
-void			history_reverse(t_history **history);
-void			history_print(t_history **history);
-size_t			history_length(t_history **history);
-
-#endif
+	perform_instruction(machine, instruction);
+	history_save(history, instruction);
+}
