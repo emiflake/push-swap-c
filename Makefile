@@ -6,7 +6,7 @@
 #    By: nmartins <nmartins@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/04/18 20:11:18 by nmartins       #+#    #+#                 #
-#    Updated: 2019/07/01 00:08:35 by nmartins      ########   odam.nl          #
+#    Updated: 2019/07/01 18:35:10 by nmartins      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJECT_NAMES=	\
 				instruction_push \
 				instruction_rotate \
 				instruction_swap \
+				instruction_reverse_rotate \
 				stack \
 				stack_parser \
 				stack_reverse \

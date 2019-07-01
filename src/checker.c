@@ -6,18 +6,22 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 21:43:59 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 00:32:42 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/01 18:49:39 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <get_next_line.h>
+#include <stdio.h>
 
+#include "printf_poly.h"
 #include "stack.h"
 #include "error.h"
 #include "stack.h"
 #include "machine.h"
 #include "instruction.h"
+
+#define BUFFER_
 
 void	checker_perform_instructions(t_machine *machine)
 {
@@ -30,17 +34,16 @@ void	checker_perform_instructions(t_machine *machine)
 		inst = parse_instruction(line);
 		if (inst == INVALID_INSTRUCTION)
 			error_out(2, "Error: Invalid instruction\n");
-		ft_putstr("Performed instruction: ");
-		ft_putendl(stringify_instruction(inst));
+		ft_printf("Performed instruction %5s => ", stringify_instruction(inst));
 		perform_instruction(machine, inst);
 		stack_print(machine->a);
+		stack_print(machine->b);
+		ft_putstr("\n");
 	}
 }
 
 void	checker_check(t_machine *machine)
 {
-	stack_print(machine->a);
-
 	checker_perform_instructions(machine);
 	if (machine_is_finished(machine))
 		ft_putendl("OK");
@@ -70,5 +73,5 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	checker(argv[1]);
-    return (0);
+	return (0);
 }

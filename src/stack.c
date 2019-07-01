@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 22:16:10 by nmartins       #+#    #+#                */
-/*   Updated: 2019/06/30 23:22:36 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/01 18:48:56 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ void			stack_print(t_stack **stack)
 	if (!stack)
 		error_out(1, "NULL passed to stack_print");
 	if (stack_is_empty(stack))
-		ft_putstr("<empty stack>");
+		ft_putstr("[]");
 	else
 	{
-		ft_putstr("<");
+		ft_putstr("[");
 		while (walker)
 		{
 			ft_putnbr(walker->head);
-			ft_putstr(" ");
+			if (walker->tail)
+				ft_putstr(", ");
 			walker = walker->tail;
 		}
-		ft_putstr(">");
+		ft_putstr("]");
 	}
-	ft_putchar('\n');
 }
