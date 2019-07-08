@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 21:53:32 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 18:34:27 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 17:57:22 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "instruction.h"
 #include "machine.h"
 
-
-const char      *g_instruction_strings[] = {
+const char	*g_instruction_strings[] = {
 	"sa",
 	"sb",
 	"ss",

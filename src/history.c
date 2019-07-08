@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/01 20:58:23 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 21:28:38 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 17:54:29 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void				history_save(t_history **history, t_instruction instruction)
 	*history = new_head;
 }
 
-
 void				history_print(t_history **history)
 {
 	t_history *walker;
@@ -65,7 +64,6 @@ void				history_print(t_history **history)
 		walker = walker->next;
 	}
 }
-
 
 size_t				history_length(t_history **history)
 {

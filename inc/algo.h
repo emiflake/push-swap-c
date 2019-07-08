@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/01 21:16:30 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 21:59:58 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 18:32:38 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,27 @@
 ** Run the algorithm
 */
 
-void	run_algorithm(t_machine *machine, t_history **result_history);
-
+void	run_algorithm(
+	t_machine *machine,
+	t_history **result_history);
 /*
 ** insertion_sort.c
 ** ------
 ** insertion sort algorithm
 */
 
-void	algo_insertion_sort(t_machine *machine, t_history **result_history);
-
+void	algo_insertion_sort(
+	t_machine *machine,
+	t_history **result_history);
 
 /*
 ** algo_helper_rotation.c
 ** ------
 ** Rotation helpers
 */
-void	algo_rotate_to_index_a(t_machine *machine, t_history **result_history, size_t index);
+void	algo_rotate_to_index_a(
+	t_machine *machine,
+	t_history **result_history,
+	int index);
 
 #endif

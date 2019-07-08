@@ -6,7 +6,7 @@
 #    By: nmartins <nmartins@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/04/18 20:11:18 by nmartins       #+#    #+#                 #
-#    Updated: 2019/07/01 21:59:16 by nmartins      ########   odam.nl          #
+#    Updated: 2019/07/08 17:52:24 by nmartins      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,15 +45,16 @@ OBJECT_NAMES=	\
 # MINILIBX, LIBFT, LIBGFX
 
 LIBFT=./libft
+LIBFTPRINTF=./ft_printf
 
 # do not configure
 CC=gcc
-INCLUDES=-I./inc -I./libft
+INCLUDES=-I./inc -I./libft -I./ft_printf/inc
 SRC=./src
 OBJ=./.obj
 EXTRA=
 CFLAGS=-Werror -Wall -Wextra $(EXTRA)
-LFLAGS=-L$(LIBFT) -lft $(INCLUDES)
+LFLAGS=-L$(LIBFT) -lft -L$(LIBFTPRINTF) -lftprintf $(INCLUDES)
 OBJECTS=$(patsubst %, $(OBJ)/%.o, $(MAIN) $(OBJECT_NAMES))
 SOURCES=$(patsubst %, $(SRC)/%.c, $(MAIN) $(OBJECT_NAMES))
 
@@ -80,11 +81,22 @@ libft_clean:
 libft_fclean:
 	@$(MAKE) -C $(LIBFT) fclean
 
-$(PUSH_SWAP): $(LIBFT)/libft.a $(OBJECTS) $(SRC)/$(PUSH_SWAP).c
+$(LIBFTPRINTF)/libftprintf.a:
+	@echo ">>= Making libftprintf"
+	@$(MAKE) -C $(LIBFTPRINTF)
+	@echo ">>= Done making libftprintf"
+
+libftprintf_clean:
+	@$(MAKE) -C $(LIBFTPRINTF) clean
+
+libftprintf_fclean:
+	@$(MAKE) -C $(LIBFTPRINTF) fclean
+
+$(PUSH_SWAP): $(LIBFT)/libft.a $(LIBFTPRINTF)/libftprintf.a $(OBJECTS) $(SRC)/$(PUSH_SWAP).c
 	@printf " λ Linking $(UNDERLINE)$(BLUE)$@$(RESET)\n"
 	@$(CC) -o $@ $(SRC)/$(PUSH_SWAP).c $(OBJECTS) $(LFLAGS)
 
-$(CHECKER): $(LIBFT)/libft.a $(OBJECTS) $(SRC)/$(CHECKER).c
+$(CHECKER): $(LIBFT)/libft.a $(LIBFTPRINTF)/libftprintf.a $(OBJECTS) $(SRC)/$(CHECKER).c
 	@printf " λ Linking $(UNDERLINE)$(BLUE)$@$(RESET)\n"
 	@$(CC) -o $@ $(SRC)/$(CHECKER).c $(OBJECTS) $(LFLAGS)
 
@@ -93,11 +105,11 @@ $(OBJ)/%.o: $(SRC)/%.c
 	@printf " λ Making object $(UNDERLINE)$(BLUE)$^$(RESET)\n"
 	@$(CC) -c -o $@ $^ $(CFLAGS) $(INCLUDES)
 
-clean: libft_clean 
+clean: libft_clean libftprintf_clean
 	@echo "$(RED)Cleaning objects$(RESET)"
 	@rm -rf $(OBJ)
 
-fclean: libft_fclean clean
+fclean: libft_fclean libftprintf_fclean clean
 	@echo "$(RED)Cleaning $(CHECKER) and $(PUSH_SWAP)$(RESET)"
 	@rm -rf $(CHECKER)
 	@rm -rf $(PUSH_SWAP)

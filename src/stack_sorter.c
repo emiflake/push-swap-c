@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 22:32:33 by nmartins       #+#    #+#                */
-/*   Updated: 2019/06/30 23:40:57 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 17:56:25 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	stack_is_sorted(t_stack **stack)
 	t_stack	*walker;
 
 	if (!stack)
-		error_out(1, "NULL passed to stack_is_sorted");	
+		error_out(1, "NULL passed to stack_is_sorted");
 	if (stack_is_empty(stack))
 		return (1);
 	walker = *stack;

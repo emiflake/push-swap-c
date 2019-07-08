@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 22:00:06 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 21:28:54 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 18:00:43 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct	s_history
 	t_instruction		inst;
 	struct s_history	*next;
 }				t_history;
-    
+
 void			history_save(t_history **history, t_instruction instruction);
 
 void			history_reverse(t_history **history);

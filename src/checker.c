@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 21:43:59 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 22:36:45 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 17:53:21 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ void	checker_perform_instructions(t_machine *machine)
 		inst = parse_instruction(line);
 		if (inst == INVALID_INSTRUCTION)
 			error_out(2, "Error: Invalid instruction\n");
-		// ft_printf("Performed instruction %5s => ", stringify_instruction(inst));
 		perform_instruction(machine, inst);
-		// stack_print(machine->a);
-		// stack_print(machine->b);
-		// ft_putstr("\n");
 		count++;
 	}
 	ft_printf("[%lu Instructions Ran]\n", count);
@@ -53,9 +49,9 @@ void	checker_check(t_machine *machine)
 {
 	checker_perform_instructions(machine);
 	if (machine_is_finished(machine))
-		ft_putendl("OK");
+		ft_printf("OK\n");
 	else
-		ft_putendl("KO");
+		ft_printf("KO\n");
 }
 
 void	checker(char *stack_str)

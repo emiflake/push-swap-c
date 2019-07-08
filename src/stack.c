@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 22:16:10 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 18:48:56 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 17:56:36 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int				stack_pop(t_stack **stack)
 {
 	int		ret;
 	t_stack	*old;
-	
+
 	if (!stack)
 		error_out(1, "NULL passed to stack_pop");
 	if (stack_is_empty(stack))

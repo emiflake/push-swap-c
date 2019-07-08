@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 21:44:20 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 22:19:38 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 17:56:01 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ int		main(int argc, char **argv)
 	if (argc != 2)
 		error_out(2, "Error\n");
 	push_swap(argv[1]);
-    return (0);
+	return (0);
 }

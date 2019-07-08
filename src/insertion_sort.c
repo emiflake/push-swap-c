@@ -6,10 +6,9 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/01 21:18:53 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 22:18:54 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 17:57:01 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "algo.h"
 #include "machine.h"

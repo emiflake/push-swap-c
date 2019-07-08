@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 21:48:22 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/01 00:26:45 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/08 18:39:05 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,20 @@ typedef enum	e_instruction
 	ROTATE_A,
 	ROTATE_B,
 	ROTATE_BOTH,
-	REVERSE_A,
-	REVERSE_B,
-	REVERSE_BOTH,
-	REVERSE_REVERSE_A,
-	REVERSE_REVERSE_B,
-	REVERSE_REVERSE_BOTH,
+	REVERSE_ROTATE_A,
+	REVERSE_ROTATE_B,
+	REVERSE_ROTATE_BOTH,
 
 	INVALID_INSTRUCTION,
 }				t_instruction;
 
 t_instruction	parse_instruction(char *instruction_string);
 const char		*stringify_instruction(t_instruction instruction);
-void			perform_instruction(t_machine *machine, t_instruction instruction);
+void			perform_instruction(
+	t_machine *machine,
+	t_instruction instruction);
 
-typedef			void(*t_instruction_function)(t_machine *machine);
+typedef	void	(*t_instruction_function)(t_machine *machine);
 
 void			swap_a(t_machine *machine);
 void			swap_b(t_machine *machine);
