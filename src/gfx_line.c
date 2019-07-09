@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/09 14:15:58 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/09 14:22:46 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/09 22:17:22 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,22 @@ void		gfx_line(
 			gfx_line_bresenham_octant_high(trgt, b, a, color);
 		else
 			gfx_line_bresenham_octant_high(trgt, a, b, color);
+	}
+}
+
+void		gfx_rectangle(t_state *this, t_point a, t_point b, int color)
+{
+	t_point c;
+
+	c = a;
+	while (c.y < b.y + a.y)
+	{
+		c.x = a.x;
+		while (c.x < b.x + a.x)
+		{
+			gfx_blit_pixel(this->screen_surface, c.x, c.y, color);
+			c.x++;
+		}
+		c.y++;
 	}
 }

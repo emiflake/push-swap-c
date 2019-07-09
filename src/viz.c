@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/08 19:05:50 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/09 18:49:30 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/09 23:11:14 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void		state_init(t_state *this)
 		exit(1);
 	}
 	this->screen_surface = SDL_GetWindowSurface(this->window);
+	SDL_SetSurfaceBlendMode(this->screen_surface, SDL_BLENDMODE_BLEND);
 	if (!this->screen_surface)
 	{
 		ft_printf("Unable to get screen surface: %s\n", SDL_GetError());
@@ -81,19 +82,50 @@ void		gfx_frame(t_state *this, int pad)
 		(t_point){this->width / 2, this->height - pad}, 0xFFFFFF);
 }
 
-void		gfx_show_stack(t_state *this, t_stack **stack, int offset)
+int			find_index(int i, t_stack **a, t_stack **b)
+{
+	int		index;
+	t_stack	*walker;
+
+	index = 0;
+	walker = *a;
+	while (walker)
+	{
+		if (walker->head < i)
+			index++;
+		walker = walker->tail;
+	}	
+	walker = *b;
+	while (walker)
+	{
+		if (walker->head < i)
+			index++;
+		walker = walker->tail;
+	}	
+	return (index);
+}
+
+void		gfx_show_stack(t_state *this, t_stack **stack, int offset, int padding)
 {
 	t_stack	*walker;
 	int		i;
-	char	buf[100];
+	double	perc;
+	double	step;
+	int		color;
 
+	step = (double)(this->height - padding * 2) / (double)this->length;
 	i = 0;
 	walker = *stack;
 	while (walker)
 	{
-		ft_bzero(buf, 100);
-		ft_snprintf(buf, 100, "<%d>", walker->head);
-		gfx_text(this, this->screen_surface, (t_point){offset, offset + 20 * i}, buf);
+		perc = (find_index(walker->head, this->machine->a, this->machine->b) + 1) / (double)this->length;
+		color = gfx_color_from_rgb(gfx_hsl2rgb((t_hsl){
+			.h = perc * 360.0,
+			.s = 0.5,
+			.l = 0.5
+		}));
+		gfx_rectangle(this, (t_point){offset, padding + step * i},
+			(t_point){perc * (this->width - padding * 2) / 2, step + 1}, color);
 		walker = walker->tail;
 		i++;
 	}
@@ -103,17 +135,24 @@ void		state_update(t_state *this)
 {
 	char			*line;
 	t_instruction	inst;
+	size_t			times;
 
-	ft_get_next_line(0, &line);
-	if (line == NULL)
-		return ;
-	inst = parse_instruction(line);
-	if (inst == INVALID_INSTRUCTION)
+	times = 100;
+	while (times)
 	{
-		ft_printf("Error: Invalid instruction\n");
-		exit(2);
+		ft_get_next_line(0, &line);
+		if (line == NULL)
+			return ;
+		inst = parse_instruction(line);
+		if (inst == INVALID_INSTRUCTION)
+		{
+			ft_printf("Error: Invalid instruction\n");
+			exit(2);
+		}
+		perform_instruction(this->machine, inst);
+		this->inst_count++;
+		times--;
 	}
-	perform_instruction(this->machine, inst);
 }
 
 void		state_run(t_state *this)
@@ -121,10 +160,9 @@ void		state_run(t_state *this)
 	const int	padding = 50;
 	ft_memset(this->screen_surface->pixels, 0,
 		this->screen_surface->w * this->screen_surface->h * 4);
-	gfx_text(this, this->screen_surface, (t_point){10, 10}, "Push Swap!");
 	gfx_frame(this, padding);
-	gfx_show_stack(this, this->machine->a, 50);
-	gfx_show_stack(this, this->machine->b, this->width / 2 + 20);
+	gfx_show_stack(this, this->machine->a, padding, padding);
+	gfx_show_stack(this, this->machine->b, this->width / 2, padding);
 	SDL_UpdateWindowSurface(this->window);
 }
 
@@ -146,7 +184,9 @@ void		state_loop(t_state *this)
 			}
 		}
 		state_run(this);
-		if (last_tick + 100 < gfx_get_current_epoch())
+		if (last_tick == 0)
+			sleep(1);
+		if (last_tick + 10 < gfx_get_current_epoch())
 		{
 			last_tick = gfx_get_current_epoch();
 			state_update(this);
@@ -172,6 +212,8 @@ int			main(int argc, char **argv)
 	machine.b = &b;
 	machine_init(&machine, argv[1]);
 	st.width = 1280;
+	st.inst_count = 0;
+	st.length = stack_length(machine.a);
 	st.height = 720;
 	st.machine = &machine;
 	state_init(&st);

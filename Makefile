@@ -6,7 +6,7 @@
 #    By: nmartins <nmartins@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/04/18 20:11:18 by nmartins       #+#    #+#                 #
-#    Updated: 2019/07/09 18:45:16 by nmartins      ########   odam.nl          #
+#    Updated: 2019/07/09 22:33:21 by nmartins      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,13 @@ CHECKER=		checker
 PUSH_SWAP=		push_swap
 VIZ=			viz
 
-VIZIFLAGS=		-I/Users/nmartins/.brew/include/ -D_THREAD_SAFE
-VIZLFLAGS=		-L/Users/nmartins/.brew/lib -lSDL2 -lSDL2_ttf
+ifeq ($(shell hostname), comonad.local)
+	VIZIFLAGS=	-I/usr/local/include -D_THREAD_SAFE
+	VIZLFLAGS=	-L/usr/local/lib -lSDL2 -lSDL2_ttf
+else
+	VIZIFLAGS=	-I/Users/nmartins/.brew/include/ -D_THREAD_SAFE
+	VIZLFLAGS=	-L/Users/nmartins/.brew/lib -lSDL2 -lSDL2_ttf
+endif
 
 OBJECT_NAMES=	\
 				instruction \
@@ -43,6 +48,7 @@ OBJECT_NAMES=	\
 				gfx_line \
 				gfx_text \
 				gfx_time \
+				gfx_color \
 				
 
 
