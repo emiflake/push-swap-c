@@ -6,7 +6,7 @@
 #    By: nmartins <nmartins@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/04/18 20:11:18 by nmartins       #+#    #+#                 #
-#    Updated: 2019/07/08 17:52:24 by nmartins      ########   odam.nl          #
+#    Updated: 2019/07/09 18:45:16 by nmartins      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@
 # configure
 CHECKER=		checker
 PUSH_SWAP=		push_swap
+VIZ=			viz
 
+VIZIFLAGS=		-I/Users/nmartins/.brew/include/ -D_THREAD_SAFE
+VIZLFLAGS=		-L/Users/nmartins/.brew/lib -lSDL2 -lSDL2_ttf
 
 OBJECT_NAMES=	\
 				instruction \
@@ -37,6 +40,9 @@ OBJECT_NAMES=	\
 				dsl \
 				machine \
 				error \
+				gfx_line \
+				gfx_text \
+				gfx_time \
 				
 
 
@@ -53,8 +59,8 @@ INCLUDES=-I./inc -I./libft -I./ft_printf/inc
 SRC=./src
 OBJ=./.obj
 EXTRA=
-CFLAGS=-Werror -Wall -Wextra $(EXTRA)
-LFLAGS=-L$(LIBFT) -lft -L$(LIBFTPRINTF) -lftprintf $(INCLUDES)
+CFLAGS=-Werror -Wall -Wextra $(EXTRA) $(VIZIFLAGS)
+LFLAGS=-L$(LIBFT) -lft -L$(LIBFTPRINTF) -lftprintf $(INCLUDES) $(VIZLFLAGS)
 OBJECTS=$(patsubst %, $(OBJ)/%.o, $(MAIN) $(OBJECT_NAMES))
 SOURCES=$(patsubst %, $(SRC)/%.c, $(MAIN) $(OBJECT_NAMES))
 
@@ -94,16 +100,20 @@ libftprintf_fclean:
 
 $(PUSH_SWAP): $(LIBFT)/libft.a $(LIBFTPRINTF)/libftprintf.a $(OBJECTS) $(SRC)/$(PUSH_SWAP).c
 	@printf " λ Linking $(UNDERLINE)$(BLUE)$@$(RESET)\n"
-	@$(CC) -o $@ $(SRC)/$(PUSH_SWAP).c $(OBJECTS) $(LFLAGS)
+	@$(CC) -o $@ $(SRC)/$(PUSH_SWAP).c $(OBJECTS) $(LFLAGS) $(CFLAGS)
 
 $(CHECKER): $(LIBFT)/libft.a $(LIBFTPRINTF)/libftprintf.a $(OBJECTS) $(SRC)/$(CHECKER).c
 	@printf " λ Linking $(UNDERLINE)$(BLUE)$@$(RESET)\n"
-	@$(CC) -o $@ $(SRC)/$(CHECKER).c $(OBJECTS) $(LFLAGS)
+	@$(CC) -o $@ $(SRC)/$(CHECKER).c $(OBJECTS) $(LFLAGS) $(CFLAGS)
+
+$(VIZ): $(LIBFT)/libft.a $(LIBFTPRINTF)/libftprintf.a $(OBJECTS) $(SRC)/$(VIZ).c
+	@printf " λ Linking $(UNDERLINE)$(BLUE)$@$(RESET)\n"
+	@$(CC) -o $@ $(SRC)/$(VIZ).c $(OBJECTS) $(LFLAGS) $(CFLAGS)
 
 $(OBJ)/%.o: $(SRC)/%.c
 	@mkdir -p $(OBJ)
 	@printf " λ Making object $(UNDERLINE)$(BLUE)$^$(RESET)\n"
-	@$(CC) -c -o $@ $^ $(CFLAGS) $(INCLUDES)
+	@$(CC) -c -o $@ $^ $(CFLAGS) $(INCLUDES) $(VIZIFLAGS)
 
 clean: libft_clean libftprintf_clean
 	@echo "$(RED)Cleaning objects$(RESET)"
