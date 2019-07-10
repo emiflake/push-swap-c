@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/01 21:16:30 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/08 18:32:38 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/10 14:31:22 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,12 @@ void	algo_rotate_to_index_a(
 	t_machine *machine,
 	t_history **result_history,
 	int index);
+
+void	algo_rotate_to_index_b(
+	t_machine *machine,
+	t_history **result_history,
+	int index);
+
+int		ft_abs(int x);
 
 #endif
