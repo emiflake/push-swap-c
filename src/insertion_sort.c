@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/01 21:18:53 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/10 18:29:43 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/11 00:17:37 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "dsl.h"
 #include "printf_poly.h"
 
-static int	stack_minimum_index(t_stack **stack)
+static int	stack_minimum_index(t_stack **stack, int *out_min)
 {
 	int		minimum;
 	size_t	minimum_index;
@@ -40,10 +40,12 @@ static int	stack_minimum_index(t_stack **stack)
 		index++;
 		walker = walker->tail;
 	}
+	if (out_min)
+		*out_min = minimum;
 	return (minimum_index);
 }
 
-static int	stack_maximum_index(t_stack **stack)
+static int	stack_maximum_index(t_stack **stack, int *out_max)
 {
 	int		maximum;
 	size_t	maximum_index;
@@ -66,6 +68,8 @@ static int	stack_maximum_index(t_stack **stack)
 		index++;
 		walker = walker->tail;
 	}
+	if (out_max)
+		*out_max = maximum;
 	return (maximum_index);
 }
 
@@ -73,42 +77,49 @@ int			index_of(t_stack **stack, int val)
 {
 	size_t	index;
 	t_stack *walker;
+	int		max;
+	int		min;
+	int		min_index;
+	int		max_index;
 
+	min_index = stack_minimum_index(stack, &min);
+	max_index = stack_maximum_index(stack, &max);
 	walker = *stack;
 	if (!walker)
 		return (0);
 	index = 0;
-	while (walker)
+	while (walker && walker->tail)
 	{
-		if (walker->head > val)
-		{
-			index++;
-		}
+		if (walker->head > val && walker->tail->head <= val)
+			return (index + 1);
+		index++;
 		walker = walker->tail;
 	}
-	return (index);
+	if (val > max)
+		return (max_index);
+	else if (val < min)
+		return (min_index + 1);
+	else
+		return (index + 1);
 }
 
 void		algo_smart_insert(t_machine *machine, t_history **result_history)
 {
-	int	val;
-	int	ind;
+	int		val;
+	int		ind;
+	size_t	len;
 
 	if (*(machine->a) == NULL)
 		return ;
 	ind = 0;
+	len = stack_length(machine->b);
 	if (*(machine->b) != NULL)
 	{
 		val = (*machine->a)->head;
 		ind = index_of(machine->b, val);
-		ft_printf("%d (%d) into ", val, ind);
-		stack_print(machine->b);
-		ft_printf(".\n");
 		algo_rotate_to_index_b(machine, result_history, ind);
 	}
 	do_inst(machine, result_history, PUSH_B);
-	if (ind > 0)
-		do_inst(machine, result_history, ROTATE_B);
 }
 
 void		algo_insertion_sort(t_machine *machine, t_history **result_history)
@@ -133,4 +144,5 @@ void		algo_insertion_sort(t_machine *machine, t_history **result_history)
 		do_inst(machine, result_history, PUSH_A);
 		c++;
 	}
+	algo_rotate_to_index_a(machine, result_history, stack_minimum_index(machine->a, NULL));
 }

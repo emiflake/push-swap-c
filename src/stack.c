@@ -6,11 +6,12 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/30 22:16:10 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/08 17:56:36 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/10 21:29:05 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <ft_printf.h>
 #include <libft.h>
 
 #include "stack.h"
@@ -70,17 +71,17 @@ void			stack_print(t_stack **stack)
 	if (!stack)
 		error_out(1, "NULL passed to stack_print");
 	if (stack_is_empty(stack))
-		ft_putstr("[]");
+		ft_dprintf(2, "[]");
 	else
 	{
-		ft_putstr("[");
+		ft_dprintf(2, "[");
 		while (walker)
 		{
-			ft_putnbr(walker->head);
+			ft_dprintf(2, "%d", walker->head);
 			if (walker->tail)
-				ft_putstr(", ");
+				ft_dprintf(2, ", ");
 			walker = walker->tail;
 		}
-		ft_putstr("]");
+		ft_dprintf(2, "]");
 	}
 }

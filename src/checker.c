@@ -21,8 +21,6 @@
 #include "machine.h"
 #include "instruction.h"
 
-#define BUFFER_
-
 void	checker_perform_instructions(t_machine *machine)
 {
 	size_t			count;
