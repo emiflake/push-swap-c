@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/08 19:05:50 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/09 23:11:14 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/10 12:57:16 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,10 @@ void		state_update(t_state *this)
 	t_instruction	inst;
 	size_t			times;
 
-	times = 100;
+	if (this->speed < 0)
+		times = -this->speed;
+	else
+		times = 1;
 	while (times)
 	{
 		ft_get_next_line(0, &line);
@@ -170,7 +173,9 @@ void		state_loop(t_state *this)
 {
 	SDL_Event		evt;
 	static long		last_tick;
+	int				sp;
 
+	sp = this->speed > 0 ? this->speed : 1;
 	while (this->running)
 	{
 		while (SDL_PollEvent(&evt))
@@ -186,7 +191,7 @@ void		state_loop(t_state *this)
 		state_run(this);
 		if (last_tick == 0)
 			sleep(1);
-		if (last_tick + 10 < gfx_get_current_epoch())
+		if (last_tick + sp < gfx_get_current_epoch())
 		{
 			last_tick = gfx_get_current_epoch();
 			state_update(this);
@@ -201,9 +206,9 @@ int			main(int argc, char **argv)
 	t_stack		*a;
 	t_stack		*b;
 
-	if (argc != 2)
+	if (argc != 3)
 	{
-		ft_printf("Usage: %s <list of numbers>\n", argv[0]);
+		ft_printf("Usage: %s <list of numbers> <speed>\n", argv[0]);
 		exit(1);
 	}
 	a = NULL;
@@ -214,6 +219,7 @@ int			main(int argc, char **argv)
 	st.width = 1280;
 	st.inst_count = 0;
 	st.length = stack_length(machine.a);
+	st.speed = ft_atoi(argv[2]);
 	st.height = 720;
 	st.machine = &machine;
 	state_init(&st);

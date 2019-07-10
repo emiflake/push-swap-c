@@ -6,7 +6,7 @@
 /*   By: nmartins <nmartins@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/07/09 14:08:55 by nmartins       #+#    #+#                */
-/*   Updated: 2019/07/09 22:53:37 by nmartins      ########   odam.nl         */
+/*   Updated: 2019/07/10 12:56:05 by nmartins      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_state
 
 	t_machine		*machine;
 
+	int				speed;
 	int				length;
 	int				inst_count;
 	TTF_Font		*font;
